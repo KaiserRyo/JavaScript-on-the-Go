@@ -1,0 +1,75 @@
+<div data-bb-type="screen" data-bb-effect="fade" style="height: 100%;" id="screen" > 
+
+
+    <div data-bb-type="title" data-bb-caption="JavaScript coding on the Go" ></div>
+
+    <textarea id="code" rows="37" style="height: 100%;" autocorrect="off" autocapitalize="off" ></textarea>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <div data-bb-type="action-bar" data-bb-back-caption="Back">
+
+        <div id="save" data-bb-type="action" data-bb-style="button" data-bb-overflow="false" data-bb-img="icon/047. Set bkgnd img.png">Save</div>	
+		
+		<div id="exec" data-bb-type="action" data-bb-style="button" data-bb-overflow="false" data-bb-img="icon/050. Device.png" >Execute</div>
+
+	</div>
+
+    <div data-bb-type="menu">
+      <div onclick="bb.pushScreen('settings.html', 'Settings');" data-bb-type="menu-item" data-bb-pin="left" data-bb-style="button" data-bb-overflow="true" data-bb-img="icon/114. Info.png">Settings</div>
+    </div>
+
+	<script type="text/javascript">
+
+    bb.init({
+        onscreenready : function(element, id, params) {
+            if (id == 'edit') { 
+                if(!window.seen) window.code = params.source;
+                window.seen = true; 
+            }
+            else if (id == 'new') { 
+                if(!window.seen) window.code = null; 
+                $('#save').html('Save as');
+                window.seen = false;
+            }
+        },
+        ondomready : function (){
+            var _this = this;
+            if (window.code) document.querySelector('#code').innerHTML = window.code;
+
+
+            _this.editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                continueComments: "Enter",
+                mode: "text/typescript"
+            });
+            _this.editor.setSize($(window).width(), $(window).height());
+            $('.CodeMirror').attr('autocorrect', 'off');
+            $('.CodeMirror').attr('autocapitalize', 'off');
+
+
+            $('#save').click(function (){
+                _this.editor.save();
+                var code = $('#code').val();
+                if(!code) 
+                    toast('You have not entered any code.'); 
+                else 
+                    save(window.seen, $('#code').val());
+                });
+            $('#exec').click(function (){
+                _this.editor.save();
+                var code = $('#code').val();
+                if(!code) 
+                    toast('You have not entered any code.'); 
+                else 
+                    bb.pushScreen('execute.html', 'execute', {'source': code});
+            });
+            $('#back').click(function (){
+                window.path = "";
+                bb.popScreen();
+            });
+            
+        }});
+    </script> 
+
+</div>

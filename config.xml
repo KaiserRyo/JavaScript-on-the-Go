@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:rim="http://www.blackberry.com/ns/widgets"
+        version="1.3.0" id="JS2Go">
+
+  <author email="thomas.kosiewski@gmx.de"
+          rim:copyright="Thomas Kosiewski">Thomas Kosiewski</author>
+
+  <name>JS on the go</name>
+
+  <description>
+    This is an editior for JavaScript on BlackBerry 10
+  </description>
+  
+  <content src="index.html" />
+
+  <icon src="icon.png"/>
+  <rim:splash src="splash-1280x768.png"/>
+  <rim:splash src="splash-720x720.png"/>
+
+  <feature id="blackberry.app">
+    <param name="orientation" value="portrait" />
+  </feature>
+
+  <feature id="blackberry.app" />
+  <feature id="blackberry.bbm.platform" />
+  <feature id="blackberry.invoke" />
+  <feature id="blackberry.invoked" required="true" />
+  <feature id="blackberry.invoke.card" /> 
+  <feature id="blackberry.io" />
+  <feature id="blackberry.ui.cover" />
+  <feature id="blackberry.ui.dialog"/>
+  <feature id="blackberry.ui.toast" />
+
+  <rim:invoke-target id="JS2Go">
+    <type>APPLICATION</type>
+    <filter>
+      <action>bb.action.VIEW</action>
+      <action>bb.action.OPEN</action>
+      <mime-type>text/javascript</mime-type>
+      <mime-type>text/JavaScript</mime-type>
+      <mime-type>text/js</mime-type>
+      <property var="uris" value="file://,data://local"/>
+    </filter>
+    <filter>
+      <action>bb.action.VIEW</action>
+      <action>bb.action.OPEN</action>
+      <mime-type>*</mime-type>
+      <property var="uris" value="file://"/>
+      <property var="exts" value="js,JS"/>
+    </filter>
+  </rim:invoke-target>
+  
+  <rim:permissions>
+    <rim:permit>bbm_connect</rim:permit> 
+    <rim:permit>access_shared</rim:permit>
+  </rim:permissions>
+
+</widget>

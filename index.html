@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link  rel="stylesheet" type="text/css" href="lib/bbui.css"></link>
+        <script type="text/javascript" src="lib/bbui.js"></script>
+        <script type="text/javascript" src="local:///chrome/webworks.js"></script>
+
+        <script src="lib/codemirror.js"></script>
+        <link rel="stylesheet" href="lib/codemirror.css">
+        <script src="lib/javascript.js"></script>
+
+        <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="script.js"></script>
+ 
+        <script type="text/javascript">
+        document.addEventListener('webworksready', function(e) {
+            bb.init();
+            bb.pushScreen('splash.html', 'start-screen');
+        }, false);
+
+        bb.init({
+            onscreenready: function(element, id) {
+            },
+            ondomready: function(element, id) {
+                    start();
+                    blackberry.event.addEventListener("invoked", onInvoked);
+            }
+        });
+        </script>
+	</head>
+</html>
