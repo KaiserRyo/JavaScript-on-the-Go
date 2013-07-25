@@ -57,23 +57,12 @@ function toast(msg) {
     blackberry.ui.toast.show(msg);
 }
 
-function eval2(code){
-    try {
-        sandbox = $('<iframe width="0" height="0"/>').css({display: 'none'}).appendTo('body')[0].contentWindow;
-        return sandbox.eval ? sandbox.eval(code) : eval(code);
-    } catch(e){
-        test = '<div style="color: red;">' + e + '</div>';
-    }
-}
-
 //invoke the filePicker Card
 function invokeFilePicker(details) {
         blackberry.invoke.card.invokeFilePicker(details, function (path) {  readFile(path); window.path = path; },  null,
         function (error) {
             if (error) {
                 alert("invoke error "+ error);
-            } else {
-                console.log("invoke success " );
             }});
 }
 
@@ -150,12 +139,10 @@ function (path) {
 function (error) {
     if (error) {
         blackberry.ui.toast.show('Error during saving: ' + error);
-        console.log('Invoke Error: ' + error);
     }});
 }
 
 function readFile(file_path) {
-    console.log(file_path);
     // un-sandbox file system to access shared folder
     blackberry.io.sandbox = false;
 
@@ -174,7 +161,7 @@ function readFile(file_path) {
                         reader.onloadend = function (e) {
                             window.path = file_path;
                             window.code = this.result;
-                            bb.pushScreen('new.html', 'edit', {source: this.result});
+                            bb.pushScreen('edit.html', 'edit', {source: this.result});
                         };
                         
                         reader.readAsText(file);
@@ -214,12 +201,6 @@ function errorHandler(e) {
 window.seen = false;
 
 function onInvoked(info) {
-    if(info.data) {
-        alert("Data: " + info.data);
-        //the data comes in as a base64 string you can convert it using atob(...)
-        //note that atob will fail if you are being passed unicode strings
-        alert("Data: " + atob(info.data));
-    }
     alert(JSON.stringify(info));
     var path = [];
     var cut = info.uri.substr(7);

@@ -18,14 +18,29 @@
                     if (id == 'execute') window.code = params.source;
                      },
             ondomready : function (){
+                sandbox = $('<iframe width="0" height="0"/>').css({display: 'none'}).appendTo('body')[0].contentWindow;
+                //sandbox.eval("window.console = {};");
+                sandbox.eval("window.console.log = function (data) { return data;}");
+                function eval2(code){
+                    try {
+                        return sandbox.eval ? sandbox.eval(code) : eval(code);
+                    } catch(e){
+                        error = '<div style="color: red;">' + e + '</div>';
+                        return error;
+                    }
+                }
                 document.querySelector('#code_field').innerHTML += ">> " + window.code + '<br><hr>' + eval2(window.code) + "<hr>";
                 document.querySelector('#command').addEventListener('keyup', function (e){
                     if(e.keyCode == 13) document.querySelector('#run').click();
                 });
                 
                 $('#run').click(function (){
-                    //comment
-                    document.querySelector('#code_field').innerHTML += '>> ' + $('#command').val() + '<br><hr>' + eval2(window.code + $('#command').val()) + '<hr>'; $('#command').val('');
+                    if ($('#command').val()) {
+                        document.querySelector('#code_field').innerHTML += '>> ' + $('#command').val() + '<br><hr>' + eval2($('#command').val()) + '<hr>'; $('#command').val('');
+                    }
+                    else {
+                        toast("Please enter a command");
+                    }
                 });
                 $('#save').click(function (){
                     save(true, window.code);
@@ -35,13 +50,5 @@
                 });
             }});
 
-    
-
-
-    //Extra Functions
-
-    window.write = function(a){
-        alert(a);
-    }
     </script> 	
 </div>
