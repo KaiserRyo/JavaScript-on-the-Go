@@ -51,6 +51,8 @@ function start() {
 	blackberry.ui.cover.updateCover();
 	// register with bbm
 	bbm.register();
+
+    localStorage.setItem('code', '');
 }
 
 function toast(msg) {
@@ -208,4 +210,36 @@ function onInvoked(info) {
     path.push(file_path)
     readFile(path);
     window.path = path;
+}
+
+var _this = {editor: ""};
+
+function createSH (code){
+    _this.editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        continueComments: "Enter",
+        mode: "text/typescript"
+    });
+    _this.editor.setSize($(window).width(), $(window).height());
+    $('.CodeMirror').attr('autocorrect', 'off');
+    $('.CodeMirror').attr('autocapitalize', 'off');
+    if (code) {
+        _this.editor.setValue(code);
+    };
+}
+
+function removeSH (){
+    _this.editor.save();
+    //$('#code').val(localStorage.getItem('code'));
+}
+
+function apply (state){
+    var state = state ? state : localStorage.getItem('sh');
+    if(state == "true"){
+        createSH();
+    } else {
+        createSH();
+        removeSH();
+    }
 }

@@ -1,5 +1,8 @@
-<div data-bb-type="screen" data-bb-effect="fade" style="height: 100%;" id="screen" > 
+<div data-bb-type="screen" data-bb-effect="slide-left" style="height: 100%;" id="screen" > 
     <div data-bb-type="title" data-bb-caption="Execute" ></div>
+    <div data-bb-type="menu">
+      <div data-bb-pin="right" onclick="bb.pushScreen('settings.html', 'Settings');if(localStorage.getItem('sh') == 'true') _this.editor.save(); window.code = $('#code').val();" data-bb-type="menu-item" data-bb-pin="left" data-bb-style="button" data-bb-overflow="true" data-bb-img="icon/114. Info.png">Settings</div>
+    </div>
     <div>
         <input type="text" id="command" placeholder="command" data-bb-clear="none" />
         <div data-bb-type="button" onclick="" id="run" >Run</div>
