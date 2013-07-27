@@ -26,7 +26,11 @@
                 sandbox.eval("window.console.log = function (data) { return data;}");
                 function eval2(code){
                     try {
-                        return sandbox.eval ? sandbox.eval(code) : eval(code);
+                        if (localStorage.getItem('is') == "true")
+                            return (sandbox.eval ? sandbox.eval(code) : eval(code)) == "[object Object]" ? (sandbox.eval ? sandbox.eval("JSON.stringify(" + code + ");") : eval("JSON.stringify(" + code + ");")) : (sandbox.eval ? sandbox.eval(code) : eval(code));
+                        else
+                            return eval(code) == "[object Object]" ? eval("JSON.stringify(" + code + ");") : eval(code);
+                        
                     } catch(e){
                         error = '<div style="color: red;">' + e + '</div>';
                         return error;

@@ -243,3 +243,9 @@ function apply (state){
         removeSH();
     }
 }
+
+window.screens = 0;
+
+function checkToggle(id, value) {
+    document.getElementById(id).setChecked(value);
+}

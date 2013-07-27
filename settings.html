@@ -14,14 +14,14 @@
         <table>
           <tr>
             <td class="cell first" style="padding-top:7px;">Syntax highlighting: </td>
-            <td  class="cell">
-              <div data-bb-type="toggle" data-bb-checked="true" data-bb-on="On" data-bb-off="Off" onchange="localStorage.setItem('sh', this.checked);apply(this.checked);" id="sh"/></div>
+            <td  class="cell" id="tsh">
+              <div data-bb-type="toggle" data-bb-checked="true" data-bb-on="On" data-bb-off="Off" onchange="localStorage.setItem('sh', this.checked);" id="sh"/></div>
             </td>
           </tr>
           <tr>
             <td class="cell first" style="padding-top:7px;">iFrame Sandboxing: </td>
             <td  class="cell">
-              <div data-bb-type="toggle" data-bb-checked="true" data-bb-on="On" data-bb-off="Off" onchange="localStorage.setItem('iF', this.checked);processiF(this.checked);" id="iF"/></div>
+              <div data-bb-type="toggle" data-bb-checked="true" data-bb-on="On" data-bb-off="Off" onchange="localStorage.setItem('is', this.checked);" id="is"/></div>
             </td>
           </tr>
         </table>  
@@ -31,15 +31,15 @@
       bb.init({
           onscreenready : function(element, id, params) {
           },
-          ondomready : function (){  
-            var options = ["sh", "iF"];
-
-            //options.forEach(function (a) {
-              if (localStorage.getItem("sh") == "true") 
-                return;
+          ondomready : function (){ 
+            var options = ["sh", "is"];
+            
+            options.forEach(function (a) {
+              if (localStorage.getItem(a) == "true") 
+                checkToggle(a, true);
               else
-                document.getElementById("sh").click();
-            //});
+                checkToggle(a, false);
+            });
           }});
 
       

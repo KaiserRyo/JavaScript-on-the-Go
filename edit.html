@@ -18,6 +18,7 @@
 
     bb.init({
         onscreenready : function(element, id, params) {
+            ++window.screens;
             if (id == 'edit') { 
                 if(!window.seen) window.code = params.source;
                 window.seen = true; 
@@ -26,7 +27,7 @@
                 if(!window.seen) window.code = null; 
                 $('#save').html('Save as');
                 window.seen = false;
-            }
+            }  
         },
         ondomready : function (){
             _this = this;
@@ -52,8 +53,11 @@
                     toast('You have not entered any code.'); 
                 else 
                     bb.pushScreen('execute.html', 'execute', {'source': code});
-            })       
+            });
+                
         }});
+
+
     </script> 
 
 </div>
