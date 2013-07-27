@@ -52,7 +52,7 @@ function start() {
 	// register with bbm
 	bbm.register();
 
-    localStorage.setItem('code', '');
+    firstStartup();
 }
 
 function toast(msg) {
@@ -224,14 +224,12 @@ function createSH (code){
     _this.editor.setSize($(window).width(), $(window).height());
     $('.CodeMirror').attr('autocorrect', 'off');
     $('.CodeMirror').attr('autocapitalize', 'off');
-    if (code) {
+    if (code)
         _this.editor.setValue(code);
-    };
 }
 
 function removeSH (){
     _this.editor.save();
-    //$('#code').val(localStorage.getItem('code'));
 }
 
 function apply (state){
@@ -244,8 +242,15 @@ function apply (state){
     }
 }
 
-window.screens = 0;
-
 function checkToggle(id, value) {
     document.getElementById(id).setChecked(value);
+}
+
+function firstStartup (){
+    if (localStorage.getItem('allreadyInit') != "true") {
+        localStorage.setItem('code', '');
+        localStorage.setItem('sh', 'true');
+        localStorage.setItem('is', 'true');
+        localStorage.setItem('allreadyInit', 'true');
+    };
 }

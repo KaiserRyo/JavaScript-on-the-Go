@@ -26,10 +26,17 @@
                 sandbox.eval("window.console.log = function (data) { return data;}");
                 function eval2(code){
                     try {
-                        if (localStorage.getItem('is') == "true")
-                            return (sandbox.eval ? sandbox.eval(code) : eval(code)) == "[object Object]" ? (sandbox.eval ? sandbox.eval("JSON.stringify(" + code + ");") : eval("JSON.stringify(" + code + ");")) : (sandbox.eval ? sandbox.eval(code) : eval(code));
-                        else
-                            return eval(code) == "[object Object]" ? eval("JSON.stringify(" + code + ");") : eval(code);
+                        if (localStorage.getItem('is') == "true") {
+                            var result = (sandbox.eval ? sandbox.eval(code) : eval(code));
+                            if(result == "[object Object]") 
+                                result = (sandbox.eval ? sandbox.eval("JSON.stringify(" + code + ");") : eval("JSON.stringify(" + code + ");"));
+                             return result;
+                        } else {
+                            var result = eval(code);
+                            if(result == "[object Object]")
+                                result = eval("JSON.stringify(" + code + ");");
+                            return result;
+                        }
                         
                     } catch(e){
                         error = '<div style="color: red;">' + e + '</div>';
